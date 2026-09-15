@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Таймер урока 3 · 90 минут: данные и ИИ</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--border:#e2e8f0;--indigo:#6366f1;--indigo-dk:#4338ca;--indigo-lt:#eef2ff;--cyan:#0ea5e9;--amber:#f59e0b;--amber-lt:#fffbeb;--green:#16a34a;--green-lt:#f0fdf4;--red:#dc2626;--red-lt:#fef2f2;--text:#0f172a;--muted:#64748b}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#fff;color:var(--text);line-height:1.5;padding:20px 22px 24px}
+h1{font-size:clamp(1.05rem,2.4vw,1.35rem);font-weight:800;letter-spacing:-.3px}
+.sub{color:var(--muted);font-size:.88rem;margin:2px 0 14px}
+.top{display:grid;grid-template-columns:1.1fr 1fr;gap:14px;margin-bottom:14px}
+@media (max-width:720px){.top{grid-template-columns:1fr}}
+.clock{background:linear-gradient(135deg,#1e1b4b,#312e81);color:#fff;border-radius:16px;padding:18px 20px}
+.clock .big{font-size:clamp(2.2rem,6vw,3.4rem);font-weight:900;letter-spacing:-1px;line-height:1;font-variant-numeric:tabular-nums}
+.clock .l{font-size:.78rem;color:#c7d2fe;text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
+.clock .stage{margin-top:12px;font-size:1rem;font-weight:800}
+.clock .stage small{display:block;font-weight:500;color:#c7d2fe;font-size:.82rem}
+.delta{border-radius:16px;padding:18px 20px;border:1px solid var(--border);display:flex;flex-direction:column;justify-content:center;gap:8px}
+.delta .v{font-size:1.6rem;font-weight:900}
+.delta.ahead .v{color:var(--green)}
+.delta.behind .v{color:var(--red)}
+.delta .l{font-size:.84rem;color:var(--muted)}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.btn{padding:10px 16px;border-radius:10px;border:1px solid #c7d2fe;background:#fff;color:var(--indigo-dk);font-weight:800;font-size:.86rem;cursor:pointer}
+.btn.primary{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+.btn.next{background:var(--cyan);color:#fff;border-color:var(--cyan)}
+.btn:focus-visible{outline:2px solid var(--indigo-dk);outline-offset:2px}
+.bar{height:12px;border-radius:100px;background:var(--indigo-lt);overflow:hidden;margin-bottom:14px;position:relative}
+.bar .fill{height:100%;background:linear-gradient(90deg,var(--indigo),var(--cyan));width:0%;transition:width .5s linear}
+.bar .plan{position:absolute;top:-3px;width:2px;height:18px;background:var(--red);left:0}
+.list{display:flex;flex-direction:column;gap:5px}
+.row{display:grid;grid-template-columns:78px 1fr 60px;gap:10px;align-items:center;padding:8px 12px;border-radius:10px;border:1px solid var(--border);font-size:.86rem}
+.row .t{font-weight:800;color:var(--indigo-dk);font-variant-numeric:tabular-nums}
+.row .d{color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.row.done{opacity:.55}
+.row.cur{border-color:var(--indigo);background:var(--indigo-lt);font-weight:700}
+.row .p{font-size:.72rem;color:var(--muted);font-weight:500;margin-left:6px}
+.row.p1 .t{color:#0369a1}
+@media (prefers-reduced-motion:reduce){*{transition:none !important}}
+</style>
+</head>
+<body>
+
+<h1>Таймер урока 3 · 90 минут</h1>
+<p class="sub">Нажмите «Старт» в начале занятия и «Следующий этап» при каждом переходе. Таймер покажет, опережаете вы план или отстаёте, — и на сколько минут.</p>
+
+<div class="top">
+  <div class="clock">
+    <div class="l">Прошло с начала занятия</div>
+    <div class="big" id="elapsed">00:00</div>
+    <div class="stage" id="stage-name">Не запущено<small id="stage-plan">Нажмите «Старт»</small></div>
+  </div>
+  <div class="delta" id="delta">
+    <div class="v" id="delta-v">—</div>
+    <div class="l" id="delta-l">Отклонение от плана появится после старта. Зелёное — опережаете, красное — отстаёте.</div>
+  </div>
+</div>
+
+<div class="controls">
+  <button type="button" class="btn primary" id="start">▶ Старт</button>
+  <button type="button" class="btn next" id="next">Следующий этап →</button>
+  <button type="button" class="btn" id="pause">⏸ Пауза</button>
+  <button type="button" class="btn" id="reset">↺ Сброс</button>
+</div>
+
+<div class="bar"><div class="fill" id="fill"></div><div class="plan" id="plan-mark"></div></div>
+<div class="list" id="list"></div>
+
+<script>
+const STAGES = [
+  {start: 0, name: "Вход «Одна просьба — пять утечек» + правило данных", part: "Т1"},
+  {start: 4, name: "«Что мне будет?»: суд, ×30, 1 из 5", part: "Т1"},
+  {start: 8, name: "Категории данных и три неочевидных правила", part: "Т1"},
+  {start: 18, name: "Куда уходит запрос: 4 класса и условия сервисов", part: "Т1"},
+  {start: 30, name: "Практикум «Светофор данных 2.0»", part: "Т1"},
+  {start: 42, name: "Подготовка данных: 4 приёма, ловушка, скрытое в файлах", part: "Т2"},
+  {start: 52, name: "«Что можно загрузить?» · найдите 12 + правило данных", part: "Т2"},
+  {start: 60, name: "Демонстрация «Метки» в нескольких моделях (вживую)", part: "Т2"},
+  {start: 67, name: "Роль в промпте: три антипаттерна", part: "Т2"},
+  {start: 72, name: "Карта нейросетей: задача × данные × доступ", part: "Т2"},
+  {start: 82, name: "Итог, квиз, exit ticket", part: "Т2"},
+  {start: 87, name: "ДЗ-1 и резерв", part: "Т2"},
+];
+const TOTAL = 90;
+
+let startedAt = null;
+let pausedElapsed = 0;
+let running = false;
+let stageIndex = -1;
+let stageEnteredAt = 0;
+let timer = null;
+
+const pad = (n) => String(n).padStart(2, "0");
+const fmt = (sec) => `${pad(Math.floor(sec / 60))}:${pad(sec % 60)}`;
+function elapsedSec() { return running ? pausedElapsed + Math.floor((Date.now() - startedAt) / 1000) : pausedElapsed; }
+
+function renderList() {
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+  STAGES.forEach((stage, i) => {
+    const end = i + 1 < STAGES.length ? STAGES[i + 1].start : TOTAL;
+    const row = document.createElement("div");
+    row.className = `row ${stage.part === "Т1" ? "p1" : ""} ${i < stageIndex ? "done" : ""} ${i === stageIndex ? "cur" : ""}`;
+    row.innerHTML = `<span class="t">${stage.start}–${end} мин</span><span>${stage.name}<span class="p">${stage.part}</span></span><span class="d">${end - stage.start} мин</span>`;
+    list.appendChild(row);
+  });
+}
+
+function tick() {
+  const sec = elapsedSec();
+  document.getElementById("elapsed").textContent = fmt(sec);
+  document.getElementById("fill").style.width = `${Math.min(100, sec / (TOTAL * 60) * 100)}%`;
+  if (stageIndex >= 0) {
+    const stage = STAGES[stageIndex];
+    const end = stageIndex + 1 < STAGES.length ? STAGES[stageIndex + 1].start : TOTAL;
+    document.getElementById("stage-name").firstChild.textContent = `${stageIndex + 1}/${STAGES.length} · ${stage.name}`;
+    const inStage = sec - stageEnteredAt;
+    const planned = (end - stage.start) * 60;
+    document.getElementById("stage-plan").textContent = `План: ${stage.start}–${end} мин · в этапе ${fmt(inStage)} из ${fmt(planned)}`;
+    document.getElementById("plan-mark").style.left = `${stage.start / TOTAL * 100}%`;
+    /* Отклонение: фактическое время входа в этап минус плановое */
+    const delta = Math.round((stageEnteredAt - stage.start * 60) / 60);
+    const box = document.getElementById("delta");
+    box.className = `delta ${delta < 0 ? "ahead" : delta > 0 ? "behind" : ""}`;
+    document.getElementById("delta-v").textContent = delta === 0 ? "По плану" : delta < 0 ? `Опережение ${Math.abs(delta)} мин` : `Отставание ${delta} мин`;
+    document.getElementById("delta-l").textContent = delta > 0
+      ? "Сократите по одному: карточки 7–8 светофора — на дом; роль в промпте — только P01 и один антипаттерн; в карте нейросетей — только таблица и три вывода. Правило данных дважды и ловушку «ИИ обезличит» не убирать."
+      : delta < 0 ? "Есть запас: резервная карточка «Резюме», задание Б1 «Перепишите промпт» вживую или P19 «Самопроверка» после демонстрации." : "Этап начат минута в минуту.";
+  }
+}
+
+document.getElementById("start").addEventListener("click", () => {
+  if (running) return;
+  startedAt = Date.now(); running = true;
+  if (stageIndex < 0) { stageIndex = 0; stageEnteredAt = 0; }
+  renderList(); tick();
+  timer = window.setInterval(tick, 1000);
+});
+document.getElementById("pause").addEventListener("click", () => {
+  if (!running) return;
+  pausedElapsed = elapsedSec(); running = false; window.clearInterval(timer);
+});
+document.getElementById("next").addEventListener("click", () => {
+  if (stageIndex < 0) { document.getElementById("start").click(); return; }
+  if (stageIndex >= STAGES.length - 1) return;
+  stageIndex += 1; stageEnteredAt = elapsedSec();
+  renderList(); tick();
+});
+document.getElementById("reset").addEventListener("click", () => {
+  window.clearInterval(timer); running = false; startedAt = null; pausedElapsed = 0; stageIndex = -1; stageEnteredAt = 0;
+  document.getElementById("elapsed").textContent = "00:00";
+  document.getElementById("stage-name").firstChild.textContent = "Не запущено";
+  document.getElementById("stage-plan").textContent = "Нажмите «Старт»";
+  document.getElementById("fill").style.width = "0%";
+  document.getElementById("delta").className = "delta";
+  document.getElementById("delta-v").textContent = "—";
+  document.getElementById("delta-l").textContent = "Отклонение от плана появится после старта.";
+  renderList();
+});
+renderList();
+</script>
+</body>
+</html>
