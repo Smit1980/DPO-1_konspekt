@@ -32,16 +32,22 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--indigo);outline-off
 .sec-title{font-size:clamp(1.4rem,3vw,2rem);font-weight:800;letter-spacing:-.5px;margin-bottom:8px}
 .sec-desc{color:var(--muted);max-width:760px;margin-bottom:24px;line-height:1.75}
 .lessons{display:flex;flex-direction:column;gap:12px}
-.lesson{display:flex;align-items:center;gap:18px;padding:20px 22px;background:var(--card);border:1px solid var(--border);border-radius:16px;text-decoration:none;color:var(--text);box-shadow:0 2px 10px rgba(15,23,42,.04);transition:transform .15s,box-shadow .15s}
+.lesson{display:flex;align-items:flex-start;gap:18px;padding:20px 22px;background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:0 2px 10px rgba(15,23,42,.04);transition:transform .15s,box-shadow .15s}
 .lesson:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(99,102,241,.14)}
 .lesson-num{width:48px;height:48px;border-radius:14px;color:#fff;font-weight:900;font-size:1.2rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .l0{background:linear-gradient(135deg,#334155,#64748b)}
 .l1{background:linear-gradient(135deg,#6366f1,#818cf8)}
 .l2{background:linear-gradient(135deg,#0ea5e9,#38bdf8)}
 .l3{background:linear-gradient(135deg,#f97316,#fb923c)}
+.l4{background:linear-gradient(135deg,#16a34a,#4ade80)}
+.lesson-info{flex:1;min-width:0}
 .lesson-info b{display:block;font-size:1.05rem;margin-bottom:3px}
-.lesson-info span{color:var(--muted);font-size:.9rem;line-height:1.55}
-.lesson-arrow{margin-left:auto;color:var(--indigo);font-weight:900;font-size:1.2rem}
+.lesson-info>span{color:var(--muted);font-size:.9rem;line-height:1.55;display:block}
+.lesson-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.lesson-chip{padding:5px 13px;border-radius:100px;background:var(--indigo-lt);color:var(--indigo-dk);font-size:.78rem;font-weight:800;text-decoration:none;white-space:nowrap;transition:background .15s,color .15s}
+.lesson-chip:hover{background:var(--indigo);color:#fff}
+.lesson-chip.ext{background:var(--cyan-lt);color:#0369a1}
+.lesson-chip.ext:hover{background:var(--cyan);color:#fff}
 .timeline-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:16px;background:var(--card)}
 table.timeline{width:100%;border-collapse:collapse;font-size:.88rem;min-width:640px}
 table.timeline th{text-align:left;padding:10px 14px;background:var(--indigo-lt);color:var(--indigo-dk);font-weight:700}
@@ -116,10 +122,33 @@ footer{text-align:center;padding:32px 20px 48px;color:var(--muted);font-size:.85
 <section class="sec" id="konspekty">
   <h2 class="sec-title fade">Конспекты</h2>
   <div class="lessons">
-    <a class="lesson fade" href="web/konspekt_urok5.html"><span class="lesson-num l3">5</span><span class="lesson-info"><b>Урок 5 · Социальная инженерия и безопасность при использовании ИИ</b><span>Одно занятие 90 минут · фишинг, убедительный диалог, признаки манипуляции, алгоритм действий · реальные случаи проверены поиском 23.09.2026</span></span><span class="lesson-arrow">→</span></a>
-    <a class="lesson fade" href="web/konspekt_urok4.html"><span class="lesson-num l2">4</span><span class="lesson-info"><b>Урок 4 · Подготовка информации для ИИ и правовые риски</b><span>Две пары по 90 минут (теперь и двумя отдельными страницами) · текст для озвучки, три живых показа в GigaChat, DeepSeek и ChatGPT, ключи практик, чек-лист</span></span><span class="lesson-arrow">→</span></a>
-    <a class="lesson fade" href="web/konspekt_urok3.html"><span class="lesson-num l1">3</span><span class="lesson-info"><b>Урок 3 · Данные и ИИ: что можно отправить и куда</b><span>Раздел 2 «Безопасная работа с ИИ» · подготовка и план Б, четыре модели для демонстрации, реплики и ключи по 11 блокам, неудобные вопросы, чек-лист · 90 минут</span></span><span class="lesson-arrow">→</span></a>
-    <a class="lesson fade" href="https://smit1980.github.io/DPO-1_1konsp/" target="_blank" rel="noopener"><span class="lesson-num l0">1</span><span class="lesson-info"><b>Урок 1 · Как устроен современный ИИ</b><span>Опорный конспект урока 1 — отдельный сайт</span></span><span class="lesson-arrow">↗</span></a>
+    <div class="lesson fade"><span class="lesson-num l3">5</span><span class="lesson-info"><b>Урок 5 · Социальная инженерия и безопасность при использовании ИИ</b><span>Одно занятие 90 минут · фишинг, убедительный диалог, признаки манипуляции, алгоритм действий · реальные случаи проверены поиском 23.09.2026</span>
+      <span class="lesson-links">
+        <a class="lesson-chip" href="web/konspekt_urok5.html">📘 Конспект →</a>
+        <a class="lesson-chip ext" href="https://smit1980.github.io/DPO-1_4/web/urok5_socialnaya_inzheneriya.html" target="_blank" rel="noopener">Страница урока ↗</a>
+      </span></span></div>
+    <div class="lesson fade"><span class="lesson-num l2">4</span><span class="lesson-info"><b>Урок 4 · Подготовка информации для ИИ и правовые риски</b><span>Две пары по 90 минут, теперь и двумя отдельными страницами · текст для озвучки, три живых показа в GigaChat, DeepSeek и ChatGPT, ключи практик, чек-лист</span>
+      <span class="lesson-links">
+        <a class="lesson-chip" href="web/konspekt_urok4.html">📘 Конспект →</a>
+        <a class="lesson-chip ext" href="https://smit1980.github.io/DPO-1_4/web/urok4_1_podgotovka_informacii.html" target="_blank" rel="noopener">Часть 1 ↗</a>
+        <a class="lesson-chip ext" href="https://smit1980.github.io/DPO-1_4/web/urok4_2_pravovye_riski.html" target="_blank" rel="noopener">Часть 2 ↗</a>
+        <a class="lesson-chip ext" href="https://smit1980.github.io/DPO-1_4/web/urok4_podgotovka_i_riski.html" target="_blank" rel="noopener">Обе части одной страницей ↗</a>
+      </span></span></div>
+    <div class="lesson fade"><span class="lesson-num l1">3</span><span class="lesson-info"><b>Урок 3 · Данные и ИИ: что можно отправить и куда</b><span>Раздел 2 «Безопасная работа с ИИ» · подготовка и план Б, четыре модели для демонстрации, реплики и ключи по 11 блокам, неудобные вопросы, чек-лист · 90 минут</span>
+      <span class="lesson-links">
+        <a class="lesson-chip" href="web/konspekt_urok3.html">📘 Конспект →</a>
+        <a class="lesson-chip ext" href="https://smit1980.github.io/DPO-1_3/" target="_blank" rel="noopener">Страница урока ↗</a>
+        <a class="lesson-chip" href="web/demo_tayming_urok3.html" target="_blank" rel="noopener">⏱ Таймер</a>
+      </span></span></div>
+    <div class="lesson fade"><span class="lesson-num l4">2</span><span class="lesson-info"><b>Урок 2 · Практикумы 1–2</b><span>Отдельный сайт-практикум, без опорного конспекта преподавателя</span>
+      <span class="lesson-links">
+        <a class="lesson-chip ext" href="https://smool-g.github.io/ii-praktikum-1-2/" target="_blank" rel="noopener">Страница урока ↗</a>
+      </span></span></div>
+    <div class="lesson fade"><span class="lesson-num l0">1</span><span class="lesson-info"><b>Урок 1 · Как устроен современный ИИ</b><span>Опорный конспект урока 1 — отдельный сайт</span>
+      <span class="lesson-links">
+        <a class="lesson-chip ext" href="https://smit1980.github.io/DPO-1_1konsp/" target="_blank" rel="noopener">📘 Конспект ↗</a>
+        <a class="lesson-chip ext" href="https://smit1980.github.io/PDO-1_1Urok/" target="_blank" rel="noopener">Страница урока ↗</a>
+      </span></span></div>
   </div>
 </section>
 
