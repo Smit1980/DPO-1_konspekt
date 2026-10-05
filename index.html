@@ -43,7 +43,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--indigo);outline-off
 .lesson-info{flex:1;min-width:0}
 .lesson-info b{display:block;font-size:1.05rem;margin-bottom:3px}
 .lesson-info>span{color:var(--muted);font-size:.9rem;line-height:1.55;display:block}
-.lesson-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.lesson-info>.lesson-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .lesson-chip{padding:5px 13px;border-radius:100px;background:var(--indigo-lt);color:var(--indigo-dk);font-size:.78rem;font-weight:800;text-decoration:none;white-space:nowrap;transition:background .15s,color .15s}
 .lesson-chip:hover{background:var(--indigo);color:#fff}
 .lesson-chip.ext{background:var(--cyan-lt);color:#0369a1}
@@ -109,6 +109,8 @@ footer{text-align:center;padding:32px 20px 48px;color:var(--muted);font-size:.85
   <h1 class="hero-title">Конспекты <em>преподавателя</em></h1>
   <p class="hero-sub">Сценарий урока по минутам: что сказать, что показать, о чём спросить, заготовки на случай, если зал молчит, ключи, заготовленные ответы ИИ и неудобные вопросы. Группе показываете страницу урока, конспект держите на втором экране.</p>
   <div class="hero-cta">
+    <a class="cta ghost" href="https://smit1980.github.io/DPO-1_course/">Общий каталог курса для слушателей ↗</a>
+    <a class="cta ghost" href="https://github.com/Smit1980/DPO-1_konspekt">Репозиторий для коллег ↗</a>
     <a class="cta primary" href="web/konspekt_urok5.html">Конспект урока 5 →</a>
     <a class="cta ghost" href="web/konspekt_urok4.html">Конспект урока 4</a>
     <a class="cta ghost" href="web/konspekt_urok3.html">Конспект урока 3</a>
@@ -122,6 +124,10 @@ footer{text-align:center;padding:32px 20px 48px;color:var(--muted);font-size:.85
 <section class="sec" id="konspekty">
   <h2 class="sec-title fade">Конспекты</h2>
   <div class="lessons">
+    <div class="lesson fade" id="val-pair1"><span class="lesson-num l3">7</span><span class="lesson-info"><b>Рабочие материалы · Первая пара · Кейс «Вал»</b><span>Конспект опубликованного занятия: техкарта, расчёт, ограничения ресурсов, хронология, записка, адаптация и ручная проверка. 90 минут.</span><span class="lesson-links"><a class="lesson-chip ext" href="https://smit1980.github.io/DPO-1_7/web/konspekt_pair1.html">Конспект ↗</a><a class="lesson-chip ext" href="https://smit1980.github.io/DPO-1_7/teacher/konspekt_pair1.docx">Конспект DOCX ↗</a><a class="lesson-chip ext" href="https://smit1980.github.io/DPO-1_7/teacher/konspekt_pair1.md">Конспект MD ↗</a><a class="lesson-chip ext" href="https://smit1980.github.io/DPO-1_7/web/first_pair_val.html">Страница занятия ↗</a><a class="lesson-chip ext" href="https://github.com/Smit1980/DPO-1_7">Репозиторий ↗</a></span></span></div>
+    <div class="lesson fade" id="prompt-lectures"><span class="lesson-num l2">П</span><span class="lesson-info"><b>Лекции Елены Чепик · Промпт-инжиниринг, части 1–2</b><span>Лекционные материалы включены ссылками на исходные страницы. Отдельные преподавательские конспекты пока не добавлены: ссылки ниже ведут на сами лекции.</span><span class="lesson-links"><a class="lesson-chip ext" href="https://elenachepik.github.io/prompt-lecture1/">Лекция · Часть 1 ↗</a><a class="lesson-chip ext" href="https://elenachepik.github.io/prompt-lecture2/">Лекция · Часть 2 ↗</a><a class="lesson-chip ext" href="https://github.com/ElenaChepik/prompt-lecture1">Репозиторий части 1 ↗</a><a class="lesson-chip ext" href="https://github.com/ElenaChepik/prompt-lecture2">Репозиторий части 2 ↗</a></span></span></div>
+    <div class="lesson fade" id="multimodal-pair2"><span class="lesson-num l2">7.2</span><span class="lesson-info"><b>Мультимодальные возможности ИИ · Вторая пара</b><span>Страница занятия опубликована. Отдельный конспект преподавателя пока не предоставлен — его можно добавить в каталог, не меняя урок.</span><span class="lesson-links"><a class="lesson-chip ext" href="https://smit1980.github.io/DPO-1_4/lesson7_pair2/">Страница занятия ↗</a><a class="lesson-chip ext" href="https://github.com/Smit1980/DPO-1_4/tree/main/lesson7_pair2">Исходники занятия ↗</a></span></span></div>
+    <div class="lesson fade" id="working-version-8"><span class="lesson-num l4">8</span><span class="lesson-info"><b>Рабочая версия · Урок 8 · Рабочие сценарии ИИ</b><span>Сохранённая локальная версия с прежними примерами. Не переработана под последнюю карту двух пар и не включена в основной маршрут слушателей.</span><span class="lesson-links"><a class="lesson-chip ext" href="https://smit1980.github.io/DPO-1_8/web/konspekt_urok8.html">Конспект рабочей версии ↗</a><a class="lesson-chip ext" href="https://smit1980.github.io/DPO-1_8/Docs/teacher/%D0%9A%D0%BE%D0%BD%D1%81%D0%BF%D0%B5%D0%BA%D1%82_%D1%83%D1%80%D0%BE%D0%BA8.docx">Конспект DOCX ↗</a><a class="lesson-chip ext" href="https://smit1980.github.io/DPO-1_8/">Статус и материалы ↗</a><a class="lesson-chip ext" href="https://github.com/Smit1980/DPO-1_8">Репозиторий ↗</a></span></span></div>
     <div class="lesson fade" id="praktikum-5-6"><span class="lesson-num l3">5–6</span><span class="lesson-info"><b>Практикумы 5–6 · Качество промпта и управление результатом</b><span>Практика по лекциям 7–8 · 90 минут · настройка DeepSeek, сравнение трёх сервисов, восемь рабочих кейсов и 20 универсальных шаблонов · синтетические исходники</span>
       <span class="lesson-links">
         <a class="lesson-chip" href="web/konspekt_praktikum_5_6.html">📘 Конспект →</a>
@@ -148,7 +154,8 @@ footer{text-align:center;padding:32px 20px 48px;color:var(--muted);font-size:.85
       </span></span></div>
     <div class="lesson fade"><span class="lesson-num l4">2</span><span class="lesson-info"><b>Урок 2 · Практикумы 1–2</b><span>Отдельный сайт-практикум, без опорного конспекта преподавателя</span>
       <span class="lesson-links">
-        <a class="lesson-chip ext" href="https://smool-g.github.io/ii-praktikum-1-2/" target="_blank" rel="noopener">Страница урока ↗</a>
+        <a class="lesson-chip ext" href="https://smit1980.github.io/DPO-1_praktikum-1-2/web/praktikum_1.html" target="_blank" rel="noopener">Практикум 1 · сценарий встроен ↗</a>
+        <a class="lesson-chip ext" href="https://smit1980.github.io/DPO-1_praktikum-1-2/web/praktikum_2.html" target="_blank" rel="noopener">Практикум 2 · сценарий встроен ↗</a>
       </span></span></div>
     <div class="lesson fade"><span class="lesson-num l0">1</span><span class="lesson-info"><b>Урок 1 · Как устроен современный ИИ</b><span>Опорный конспект урока 1 — отдельный сайт</span>
       <span class="lesson-links">
